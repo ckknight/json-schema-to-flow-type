@@ -18,7 +18,8 @@ test('should convert allOf', (t) => {
       }],
     }),
     flow('string')
-      .id('AllOf'),
+      .id('AllOf')
+      .default(0),
   );
 });
 
@@ -227,5 +228,18 @@ test('should convert Array', (t) => {
       .union([
         flow('string'),
       ]),
+  );
+});
+
+test('should convert with description', (t) => {
+  t.deepEqual(
+    convertSchema({
+      id: 'String',
+      type: 'string',
+      description: 'A rather cool string'
+    }),
+    flow('string')
+      .id('String')
+      .description('A rather cool string'),
   );
 });

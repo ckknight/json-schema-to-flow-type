@@ -1,50 +1,103 @@
 // @flow
 /* eslint-disable */
 
-export type SchemaArray = Array<Schema>;
+/**
+ * minItems: 1
+ */export type SchemaArray = Array<Schema>;
 
-export type PositiveInteger = number;
+/**
+ * minimum: 0
+ */export type PositiveInteger = number;
 
-export type PositiveIntegerDefault0 = PositiveInteger;
+/**
+ * default: 0
+ */export type PositiveIntegerDefault0 = PositiveInteger;
 
 export type SimpleTypes = "array" | "boolean" | "integer" | "null" | "number" | "object" | "string";
 
-export type StringArray = Array<string>;
+/**
+ * minItems: 1
+ * uniqueItems: true
+ */export type StringArray = Array<string>;
 
-export type Schema = {
-  id?: string;
-  $ref?: string;
-  $schema?: string;
+/**
+ * Core schema meta-schema
+ * default: {}
+ */export type Schema = {
+  /**
+   * format: uri
+   */id?: string;
+  /**
+   * format: uri
+   */$ref?: string;
+  /**
+   * format: uri
+   */$schema?: string;
   title?: string;
   description?: string;
   default?: any;
-  multipleOf?: number;
+  /**
+   * minimum: 0
+   * exclusiveMinimum: true
+   */multipleOf?: number;
   maximum?: number;
-  exclusiveMaximum?: boolean;
+  /**
+   * default: false
+   */exclusiveMaximum?: boolean;
   minimum?: number;
-  exclusiveMinimum?: boolean;
+  /**
+   * default: false
+   */exclusiveMinimum?: boolean;
   maxLength?: PositiveInteger;
   minLength?: PositiveIntegerDefault0;
-  pattern?: string;
-  additionalItems?: boolean | Schema;
-  items?: Schema | SchemaArray;
+  /**
+   * format: regex
+   */pattern?: string;
+  /**
+   * default: {}
+   */additionalItems?: boolean | Schema;
+  /**
+   * default: {}
+   */items?: Schema | SchemaArray;
   maxItems?: PositiveInteger;
   minItems?: PositiveIntegerDefault0;
-  uniqueItems?: boolean;
+  /**
+   * default: false
+   */uniqueItems?: boolean;
   maxProperties?: PositiveInteger;
   minProperties?: PositiveIntegerDefault0;
   required?: StringArray;
-  additionalProperties?: boolean | Schema;
-  definitions?: { [key: any]: Schema;
+  /**
+   * default: {}
+   */additionalProperties?: boolean | Schema;
+  /**
+   * default: {}
+   */definitions?: { /**
+                      * default: {}
+                      */[key: any]: Schema;
   };
-  properties?: { [key: any]: Schema;
+  /**
+   * default: {}
+   */properties?: { /**
+                     * default: {}
+                     */[key: any]: Schema;
   };
-  patternProperties?: { [key: any]: Schema;
+  /**
+   * default: {}
+   */patternProperties?: { /**
+                            * default: {}
+                            */[key: any]: Schema;
   };
   dependencies?: { [key: any]: Schema | StringArray;
   };
-  enum?: Array<any>;
-  type?: SimpleTypes | Array<SimpleTypes>;
+  /**
+   * minItems: 1
+   * uniqueItems: true
+   */enum?: Array<any>;
+  type?: SimpleTypes | /**
+                        * minItems: 1
+                        * uniqueItems: true
+                        */Array<SimpleTypes>;
   allOf?: SchemaArray;
   anyOf?: SchemaArray;
   oneOf?: SchemaArray;

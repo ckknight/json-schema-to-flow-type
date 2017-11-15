@@ -28,15 +28,20 @@ export {
   toFlowType,
 };
 
-export const toFlow = (flowSchema: FlowSchema): Object =>
-  t.exportNamedDeclaration(
-    t.typeAlias(
-      t.identifier(upperCamelCase(flowSchema.$id)),
-      null,
-      toFlowType(flowSchema),
+export const toFlow = (flowSchema: FlowSchema): Object => {
+  const { leadingComments, ...flowType } = toFlowType(flowSchema);
+  return {
+    ...t.exportNamedDeclaration(
+      t.typeAlias(
+        t.identifier(upperCamelCase(flowSchema.$id)),
+        null,
+        flowType,
+      ),
+      [],
     ),
-    [],
-  );
+    leadingComments
+  }
+};
 
 export const schemaToFlow = (flowSchema: FlowSchema): string =>
   _.map(
@@ -53,4 +58,3 @@ export const parseSchema = (schema: Schema, imports: ?{ [key: string]: Schema })
     convertSchema,
     schemaToFlow,
   )(schema);
-

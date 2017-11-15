@@ -1,64 +1,131 @@
 // @flow
 /* eslint-disable */
 
-export type Info = {
-  title: string;
-  version: string;
-  description?: string;
-  termsOfService?: string;
+/**
+ * General information about the API.
+ */export type Info = {
+  /**
+   * A unique and precise title of the API.
+   */title: string;
+  /**
+   * A semantic version number of the API.
+   */version: string;
+  /**
+   * A longer description of the API. Should be different from the title.  GitHub Flavored Markdown is allowed.
+   */description?: string;
+  /**
+   * The terms of service for the API.
+   */termsOfService?: string;
   contact?: Contact;
   license?: License;
-  [key: any]: VendorExtension;
+  /**
+   * General information about the API.
+   */[key: any]: VendorExtension;
 };
 
-export type Contact = {
-  name?: string;
-  url?: string;
-  email?: string;
-  [key: any]: VendorExtension;
+/**
+ * Contact information for the owners of the API.
+ */export type Contact = {
+  /**
+   * The identifying name of the contact person/organization.
+   */name?: string;
+  /**
+   * The URL pointing to the contact information.
+   * format: uri
+   */url?: string;
+  /**
+   * The email address of the contact person/organization.
+   * format: email
+   */email?: string;
+  /**
+   * Contact information for the owners of the API.
+   */[key: any]: VendorExtension;
 };
 
 export type License = {
-  name: string;
-  url?: string;
+  /**
+   * The name of the license type. It's encouraged to use an OSI compatible license.
+   */name: string;
+  /**
+   * The URL pointing to the license.
+   * format: uri
+   */url?: string;
   [key: any]: VendorExtension;
 };
 
-export type Paths = { [key: any]: VendorExtension | PathItem;
+/**
+ * Relative paths to the individual endpoints. They must be relative to the 'basePath'.
+ */export type Paths = { /**
+                          * Relative paths to the individual endpoints. They must be relative to the 'basePath'.
+                          */[key: any]: VendorExtension | PathItem;
 };
 
-export type Definitions = { [key: any]: Schema;
+/**
+ * One or more JSON objects describing the schemas being consumed and produced by the API.
+ */export type Definitions = { /**
+                                * One or more JSON objects describing the schemas being consumed and produced by the API.
+                                */[key: any]: Schema;
 };
 
-export type ParameterDefinitions = { [key: any]: Parameter;
+/**
+ * One or more JSON representations for parameters
+ */export type ParameterDefinitions = { /**
+                                         * One or more JSON representations for parameters
+                                         */[key: any]: Parameter;
 };
 
-export type ResponseDefinitions = { [key: any]: Response;
+/**
+ * One or more JSON representations for parameters
+ */export type ResponseDefinitions = { /**
+                                        * One or more JSON representations for parameters
+                                        */[key: any]: Response;
 };
 
-export type ExternalDocs = {
+/**
+ * information about external documentation
+ */export type ExternalDocs = {
   description?: string;
-  url: string;
-  [key: any]: VendorExtension;
+  /**
+   * format: uri
+   */url: string;
+  /**
+   * information about external documentation
+   */[key: any]: VendorExtension;
 };
 
 export type Examples = { [key: any]: any;
 };
 
-export type MimeType = string;
+/**
+ * The MIME type of the HTTP message.
+ */export type MimeType = string;
 
 export type Operation = {
-  tags?: Array<string>;
-  summary?: string;
-  description?: string;
+  /**
+   * uniqueItems: true
+   */tags?: Array<string>;
+  /**
+   * A brief summary of the operation.
+   */summary?: string;
+  /**
+   * A longer description of the operation, GitHub Flavored Markdown is allowed.
+   */description?: string;
   externalDocs?: ExternalDocs;
-  operationId?: string;
-  produces?: MediaTypeList;
-  consumes?: MediaTypeList;
+  /**
+   * A unique identifier of the operation.
+   */operationId?: string;
+  /**
+   * A list of MIME types the API can produce.
+   */produces?: MediaTypeList;
+  /**
+   * A list of MIME types the API can consume.
+   */consumes?: MediaTypeList;
   parameters?: ParametersList;
   responses: Responses;
   schemes?: SchemesList;
-  deprecated?: boolean;
+  /**
+   * default: false
+   */deprecated?: boolean;
   security?: Security;
   [key: any]: VendorExtension;
 };
@@ -76,7 +143,11 @@ export type PathItem = {
   [key: any]: VendorExtension;
 };
 
-export type Responses = { [key: any]: ResponseValue | VendorExtension;
+/**
+ * Response objects names can either be any valid HTTP status code or 'default'.
+ */export type Responses = { /**
+                              * Response objects names can either be any valid HTTP status code or 'default'.
+                              */[key: any]: ResponseValue | VendorExtension;
 };
 
 export type ResponseValue = Response | JsonReference;
@@ -114,22 +185,42 @@ export type Header = {
   [key: any]: VendorExtension;
 };
 
-export type VendorExtension = any;
+/**
+ * Any property starting with x- is valid.
+ */export type VendorExtension = any;
 
 export type BodyParameter = {
-  description?: string;
-  name: string;
-  in: "body";
-  required?: boolean;
+  /**
+   * A brief description of the parameter. This could contain examples of use.  GitHub Flavored Markdown is allowed.
+   */description?: string;
+  /**
+   * The name of the parameter.
+   */name: string;
+  /**
+   * Determines the location of the parameter.
+   */in: "body";
+  /**
+   * Determines whether or not this parameter is required or optional.
+   * default: false
+   */required?: boolean;
   schema: Schema;
   [key: any]: VendorExtension;
 };
 
 export type HeaderParameterSubSchema = {
-  required?: boolean;
-  in?: "header";
-  description?: string;
-  name?: string;
+  /**
+   * Determines whether or not this parameter is required or optional.
+   * default: false
+   */required?: boolean;
+  /**
+   * Determines the location of the parameter.
+   */in?: "header";
+  /**
+   * A brief description of the parameter. This could contain examples of use.  GitHub Flavored Markdown is allowed.
+   */description?: string;
+  /**
+   * The name of the parameter.
+   */name?: string;
   type?: "string" | "number" | "boolean" | "integer" | "array";
   format?: string;
   items?: PrimitivesItems;
@@ -151,11 +242,23 @@ export type HeaderParameterSubSchema = {
 };
 
 export type QueryParameterSubSchema = {
-  required?: boolean;
-  in?: "query";
-  description?: string;
-  name?: string;
-  allowEmptyValue?: boolean;
+  /**
+   * Determines whether or not this parameter is required or optional.
+   * default: false
+   */required?: boolean;
+  /**
+   * Determines the location of the parameter.
+   */in?: "query";
+  /**
+   * A brief description of the parameter. This could contain examples of use.  GitHub Flavored Markdown is allowed.
+   */description?: string;
+  /**
+   * The name of the parameter.
+   */name?: string;
+  /**
+   * allows sending a parameter by name only or with an empty value.
+   * default: false
+   */allowEmptyValue?: boolean;
   type?: "string" | "number" | "boolean" | "integer" | "array";
   format?: string;
   items?: PrimitivesItems;
@@ -177,11 +280,23 @@ export type QueryParameterSubSchema = {
 };
 
 export type FormDataParameterSubSchema = {
-  required?: boolean;
-  in?: "formData";
-  description?: string;
-  name?: string;
-  allowEmptyValue?: boolean;
+  /**
+   * Determines whether or not this parameter is required or optional.
+   * default: false
+   */required?: boolean;
+  /**
+   * Determines the location of the parameter.
+   */in?: "formData";
+  /**
+   * A brief description of the parameter. This could contain examples of use.  GitHub Flavored Markdown is allowed.
+   */description?: string;
+  /**
+   * The name of the parameter.
+   */name?: string;
+  /**
+   * allows sending a parameter by name only or with an empty value.
+   * default: false
+   */allowEmptyValue?: boolean;
   type?: "string" | "number" | "boolean" | "integer" | "array" | "file";
   format?: string;
   items?: PrimitivesItems;
@@ -203,10 +318,18 @@ export type FormDataParameterSubSchema = {
 };
 
 export type PathParameterSubSchema = {
-  required: true;
-  in?: "path";
-  description?: string;
-  name?: string;
+  /**
+   * Determines whether or not this parameter is required or optional.
+   */required: true;
+  /**
+   * Determines the location of the parameter.
+   */in?: "path";
+  /**
+   * A brief description of the parameter. This could contain examples of use.  GitHub Flavored Markdown is allowed.
+   */description?: string;
+  /**
+   * The name of the parameter.
+   */name?: string;
   type?: "string" | "number" | "boolean" | "integer" | "array";
   format?: string;
   items?: PrimitivesItems;
@@ -231,52 +354,114 @@ export type NonBodyParameter = HeaderParameterSubSchema | FormDataParameterSubSc
 
 export type Parameter = BodyParameter | NonBodyParameter;
 
-export type Schema = {
+/**
+ * A deterministic version of a JSON Schema object.
+ */export type Schema = {
   $ref?: string;
   format?: string;
   title?: string;
   description?: string;
   default?: any;
-  multipleOf?: number;
+  /**
+   * minimum: 0
+   * exclusiveMinimum: true
+   */multipleOf?: number;
   maximum?: number;
-  exclusiveMaximum?: boolean;
+  /**
+   * default: false
+   */exclusiveMaximum?: boolean;
   minimum?: number;
-  exclusiveMinimum?: boolean;
-  maxLength?: number;
-  minLength?: number;
-  pattern?: string;
-  maxItems?: number;
-  minItems?: number;
-  uniqueItems?: boolean;
-  maxProperties?: number;
-  minProperties?: number;
-  required?: Array<string>;
-  enum?: Array<any>;
-  additionalProperties?: Schema | boolean;
-  type?: "array" | "boolean" | "integer" | "null" | "number" | "object" | "string" | Array<"array" | "boolean" | "integer" | "null" | "number" | "object" | "string">;
-  items?: Schema | Array<Schema>;
-  allOf?: Array<Schema>;
-  properties?: { [key: any]: Schema;
+  /**
+   * default: false
+   */exclusiveMinimum?: boolean;
+  /**
+   * minimum: 0
+   */maxLength?: number;
+  /**
+   * minimum: 0
+   * default: 0
+   */minLength?: number;
+  /**
+   * format: regex
+   */pattern?: string;
+  /**
+   * minimum: 0
+   */maxItems?: number;
+  /**
+   * minimum: 0
+   * default: 0
+   */minItems?: number;
+  /**
+   * default: false
+   */uniqueItems?: boolean;
+  /**
+   * minimum: 0
+   */maxProperties?: number;
+  /**
+   * minimum: 0
+   * default: 0
+   */minProperties?: number;
+  /**
+   * minItems: 1
+   * uniqueItems: true
+   */required?: Array<string>;
+  /**
+   * minItems: 1
+   * uniqueItems: true
+   */enum?: Array<any>;
+  /**
+   * default: {}
+   */additionalProperties?: Schema | boolean;
+  type?: "array" | "boolean" | "integer" | "null" | "number" | "object" | "string" | /**
+                                                                                      * minItems: 1
+                                                                                      * uniqueItems: true
+                                                                                      */Array<"array" | "boolean" | "integer" | "null" | "number" | "object" | "string">;
+  /**
+   * default: {}
+   */items?: Schema | /**
+                       * minItems: 1
+                       */Array<Schema>;
+  /**
+   * minItems: 1
+   */allOf?: Array<Schema>;
+  /**
+   * default: {}
+   */properties?: { /**
+                     * default: {}
+                     */[key: any]: Schema;
   };
   discriminator?: string;
-  readOnly?: boolean;
+  /**
+   * default: false
+   */readOnly?: boolean;
   xml?: Xml;
   externalDocs?: ExternalDocs;
   example?: any;
-  [key: any]: VendorExtension;
+  /**
+   * A deterministic version of a JSON Schema object.
+   */[key: any]: VendorExtension;
 };
 
-export type FileSchema = {
+/**
+ * A deterministic version of a JSON Schema object.
+ */export type FileSchema = {
   format?: string;
   title?: string;
   description?: string;
   default?: any;
-  required?: Array<string>;
+  /**
+   * minItems: 1
+   * uniqueItems: true
+   */required?: Array<string>;
   type: "file";
-  readOnly?: boolean;
+  /**
+   * default: false
+   */readOnly?: boolean;
   externalDocs?: ExternalDocs;
   example?: any;
-  [key: any]: VendorExtension;
+  /**
+   * A deterministic version of a JSON Schema object.
+   */[key: any]: VendorExtension;
 };
 
 export type PrimitivesItems = {
@@ -300,17 +485,25 @@ export type PrimitivesItems = {
   [key: any]: VendorExtension;
 };
 
-export type Security = Array<SecurityRequirement>;
+/**
+ * uniqueItems: true
+ */export type Security = Array<SecurityRequirement>;
 
-export type SecurityRequirement = { [key: any]: Array<string>;
+export type SecurityRequirement = { [key: any]: /**
+                                                 * uniqueItems: true
+                                                 */Array<string>;
 };
 
 export type Xml = {
   name?: string;
   namespace?: string;
   prefix?: string;
-  attribute?: boolean;
-  wrapped?: boolean;
+  /**
+   * default: false
+   */attribute?: boolean;
+  /**
+   * default: false
+   */wrapped?: boolean;
   [key: any]: VendorExtension;
 };
 
@@ -342,7 +535,9 @@ export type Oauth2ImplicitSecurity = {
   type: "oauth2";
   flow: "implicit";
   scopes?: Oauth2Scopes;
-  authorizationUrl: string;
+  /**
+   * format: uri
+   */authorizationUrl: string;
   description?: string;
   [key: any]: VendorExtension;
 };
@@ -351,7 +546,9 @@ export type Oauth2PasswordSecurity = {
   type: "oauth2";
   flow: "password";
   scopes?: Oauth2Scopes;
-  tokenUrl: string;
+  /**
+   * format: uri
+   */tokenUrl: string;
   description?: string;
   [key: any]: VendorExtension;
 };
@@ -360,7 +557,9 @@ export type Oauth2ApplicationSecurity = {
   type: "oauth2";
   flow: "application";
   scopes?: Oauth2Scopes;
-  tokenUrl: string;
+  /**
+   * format: uri
+   */tokenUrl: string;
   description?: string;
   [key: any]: VendorExtension;
 };
@@ -369,8 +568,12 @@ export type Oauth2AccessCodeSecurity = {
   type: "oauth2";
   flow: "accessCode";
   scopes?: Oauth2Scopes;
-  authorizationUrl: string;
-  tokenUrl: string;
+  /**
+   * format: uri
+   */authorizationUrl: string;
+  /**
+   * format: uri
+   */tokenUrl: string;
   description?: string;
   [key: any]: VendorExtension;
 };
@@ -378,15 +581,27 @@ export type Oauth2AccessCodeSecurity = {
 export type Oauth2Scopes = { [key: any]: string;
 };
 
-export type MediaTypeList = Array<MimeType>;
+/**
+ * uniqueItems: true
+ */export type MediaTypeList = Array<MimeType>;
 
-export type ParametersList = Array<Parameter | JsonReference>;
+/**
+ * The parameters needed to send a valid API call.
+ * uniqueItems: true
+ */export type ParametersList = Array<Parameter | JsonReference>;
 
-export type SchemesList = Array<"http" | "https" | "ws" | "wss">;
+/**
+ * The transfer protocol of the API.
+ * uniqueItems: true
+ */export type SchemesList = Array<"http" | "https" | "ws" | "wss">;
 
-export type CollectionFormat = "csv" | "ssv" | "tsv" | "pipes";
+/**
+ * default: "csv"
+ */export type CollectionFormat = "csv" | "ssv" | "tsv" | "pipes";
 
-export type CollectionFormatWithMulti = "csv" | "ssv" | "tsv" | "pipes" | "multi";
+/**
+ * default: "csv"
+ */export type CollectionFormatWithMulti = "csv" | "ssv" | "tsv" | "pipes" | "multi";
 
 export type Title = string;
 
@@ -394,49 +609,85 @@ export type Description = string;
 
 export type Default = any;
 
-export type MultipleOf = number;
+/**
+ * minimum: 0
+ * exclusiveMinimum: true
+ */export type MultipleOf = number;
 
 export type Maximum = number;
 
-export type ExclusiveMaximum = boolean;
+/**
+ * default: false
+ */export type ExclusiveMaximum = boolean;
 
 export type Minimum = number;
 
-export type ExclusiveMinimum = boolean;
+/**
+ * default: false
+ */export type ExclusiveMinimum = boolean;
 
-export type MaxLength = number;
+/**
+ * minimum: 0
+ */export type MaxLength = number;
 
-export type MinLength = number;
+/**
+ * minimum: 0
+ * default: 0
+ */export type MinLength = number;
 
-export type Pattern = string;
+/**
+ * format: regex
+ */export type Pattern = string;
 
-export type MaxItems = number;
+/**
+ * minimum: 0
+ */export type MaxItems = number;
 
-export type MinItems = number;
+/**
+ * minimum: 0
+ * default: 0
+ */export type MinItems = number;
 
-export type UniqueItems = boolean;
+/**
+ * default: false
+ */export type UniqueItems = boolean;
 
-export type Enum = Array<any>;
+/**
+ * minItems: 1
+ * uniqueItems: true
+ */export type Enum = Array<any>;
 
 export type JsonReference = {
   $ref: string;
 };
 
 export type Swagger = {
-  swagger: "2.0";
+  /**
+   * The Swagger version of this document.
+   */swagger: "2.0";
   info: Info;
-  host?: string;
-  basePath?: string;
+  /**
+   * The host (name or ip) of the API. Example: 'swagger.io'
+   */host?: string;
+  /**
+   * The base path to the API. Example: '/api'.
+   */basePath?: string;
   schemes?: SchemesList;
-  consumes?: MediaTypeList;
-  produces?: MediaTypeList;
+  /**
+   * A list of MIME types accepted by the API.
+   */consumes?: MediaTypeList;
+  /**
+   * A list of MIME types the API can produce.
+   */produces?: MediaTypeList;
   paths: Paths;
   definitions?: Definitions;
   parameters?: ParameterDefinitions;
   responses?: ResponseDefinitions;
   security?: Security;
   securityDefinitions?: SecurityDefinitions;
-  tags?: Array<Tag>;
+  /**
+   * uniqueItems: true
+   */tags?: Array<Tag>;
   externalDocs?: ExternalDocs;
   [key: any]: VendorExtension;
 };
